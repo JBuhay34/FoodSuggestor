@@ -9,6 +9,10 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.justlive.justinbuhay.foodsuggestor.threads.YelpAsyncTaskLoader;
 
@@ -19,21 +23,32 @@ import java.util.List;
 
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<HashMap<String,String>>>{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<HashMap<String,String>>>, View.OnClickListener{
 
-    String term = "ono";
-    String location = "south san francisco";
+    private String term = "ono";
+    private String location = "south san francisco";
     // max is 40,000 meters(25 miles).
-    int range = 10000;
+    private int range = 10000;
     // max is 4, can also have '1,2,3' to filter within 1-3 price ranges.
-    int price = 1;
+    private int price = 1;
+
+    private EditText termsEditText, locationEditText;
+    private TextView businessDetailsTextView;
+    private Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportLoaderManager().initLoader(0, null, this).forceLoad();
+
+
+        termsEditText = (EditText) findViewById(R.id.terms_edit_text);
+        locationEditText = (EditText) findViewById(R.id.location_edit_text);
+        searchButton = (Button) findViewById(R.id.search_button);
+        businessDetailsTextView = (TextView) findViewById(R.id.business_details_text_view);
+
+        searchButton.setOnClickListener(this);
 
 
     }
@@ -46,14 +61,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<HashMap<String,String>>> loader, List<HashMap<String,String>> data) {
+        StringBuilder businessDetails = new StringBuilder();
         for(int i = 0; i < data.size(); i++){
-            Log.e(MainActivity.class.getSimpleName(), data.get(i).get("name"));
-            Log.e(MainActivity.class.getSimpleName(), data.get(i).get("phone"));
-            Log.e(MainActivity.class.getSimpleName(), data.get(i).get("rating"));
-            Log.e(MainActivity.class.getSimpleName(), data.get(i).get("price"));
-            Log.e(MainActivity.class.getSimpleName(), data.get(i).get("address"));
+
+            businessDetails.append(data.get(i).get("name"));
+            businessDetails.append(data.get(i).get("phone"));
+            businessDetails.append(data.get(i).get("rating"));
+            businessDetails.append(data.get(i).get("price"));
+            businessDetails.append(data.get(i).get("address"));
+            businessDetails.append("\n");
 
         }
+
+        String details = businessDetails.toString();
+        businessDetailsTextView.setText(details);
     }
 
 
@@ -61,5 +82,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
 
+    }
+
+    private static int count = 0;
+
+    @Override
+    public void onClick(View view) {
+        if(view == searchButton){
+            term = termsEditText.getText().toString();
+            location = locationEditText.getText().toString();
+            Log.e(MainActivity.class.getSimpleName(), term + " " +location);
+            if(count == 0) {
+                getSupportLoaderManager().initLoader(0, null, this).forceLoad();
+                count++;
+            }
+            getSupportLoaderManager().restartLoader(0, null, this).forceLoad();
+        }
     }
 }
