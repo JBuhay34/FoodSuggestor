@@ -8,12 +8,15 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.justlive.justinbuhay.foodsuggestor.adapters.BusinessCardsAdapter;
 import com.justlive.justinbuhay.foodsuggestor.threads.YelpAsyncTaskLoader;
 
 import java.io.IOException;
@@ -33,8 +36,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private int price = 1;
 
     private EditText termsEditText, locationEditText;
-    private TextView businessDetailsTextView;
     private Button searchButton;
+    private RecyclerView businessCardsRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         termsEditText = (EditText) findViewById(R.id.terms_edit_text);
         locationEditText = (EditText) findViewById(R.id.location_edit_text);
         searchButton = (Button) findViewById(R.id.search_button);
-        businessDetailsTextView = (TextView) findViewById(R.id.business_details_text_view);
+
+        businessCardsRecyclerView = (RecyclerView) findViewById(R.id.business_cards_recyclerview);
+        businessCardsRecyclerView.setHasFixedSize(true);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        businessCardsRecyclerView.setLayoutManager(mLayoutManager);
+
 
         searchButton.setOnClickListener(this);
 
@@ -61,20 +71,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<HashMap<String,String>>> loader, List<HashMap<String,String>> data) {
-        StringBuilder businessDetails = new StringBuilder();
-        for(int i = 0; i < data.size(); i++){
+        businessCardsRecyclerView.setAdapter(new BusinessCardsAdapter(this, data));
 
-            businessDetails.append(data.get(i).get("name"));
-            businessDetails.append(data.get(i).get("phone"));
-            businessDetails.append(data.get(i).get("rating"));
-            businessDetails.append(data.get(i).get("price"));
-            businessDetails.append(data.get(i).get("address"));
-            businessDetails.append("\n");
 
-        }
-
-        String details = businessDetails.toString();
-        businessDetailsTextView.setText(details);
     }
 
 
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    private static int count = 0;
+
 
     @Override
     public void onClick(View view) {
@@ -92,11 +91,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             term = termsEditText.getText().toString();
             location = locationEditText.getText().toString();
             Log.e(MainActivity.class.getSimpleName(), term + " " +location);
-            if(count == 0) {
-                getSupportLoaderManager().initLoader(0, null, this).forceLoad();
-                count++;
+
+            if(getSupportLoaderManager().getLoader(3) == null) {
+                getSupportLoaderManager().initLoader(3, null, this).forceLoad();
             }
-            getSupportLoaderManager().restartLoader(0, null, this).forceLoad();
+            getSupportLoaderManager().restartLoader(3, null, this).forceLoad();
         }
     }
 }
