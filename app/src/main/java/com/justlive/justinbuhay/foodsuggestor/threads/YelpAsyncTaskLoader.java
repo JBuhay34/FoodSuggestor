@@ -87,6 +87,8 @@ public class YelpAsyncTaskLoader extends AsyncTaskLoader<List<HashMap<String,Str
                 int rating = current.getInt("rating");
                 String phone = current.getString("phone");
                 String price = current.getString("price");
+                float longitude = (float) current.getDouble("longitude");
+                float latitude = (float) current.getDouble("latitude");
 
                 JSONObject location = current.getJSONObject("location");
                 JSONArray displayAddressArray = location.getJSONArray("display_address");

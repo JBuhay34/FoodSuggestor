@@ -28,11 +28,12 @@
 
             <TextView
                 android:id="@+id/business_name_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Bambu"
+                android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold"
                 card_view:layout_constraintStart_toStartOf="parent"
@@ -43,15 +44,18 @@
                 style="@android:style/Widget.Holo.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="44dp"
+                card_view:layout_constraintBottom_toTopOf="@+id/phone_text_view"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/business_name_text_view" />
+                card_view:layout_constraintTop_toBottomOf="@+id/business_name_text_view"
+                card_view:layout_constraintVertical_bias="0.78" />
 
             <TextView
                 android:id="@+id/phone_text_view"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="23dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="(432)427-1314"
@@ -59,7 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/ratingBar"
-                card_view:layout_constraintVertical_bias="0.39" />
+                card_view:layout_constraintVertical_bias="0.45" />
 
             <TextView
                 android:id="@+id/price_text_view"
@@ -72,20 +76,22 @@
                 card_view:layout_constraintTop_toBottomOf="@+id/phone_text_view" />
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/business_image_view"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/ic_launcher"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/phone_text_view" />
+                card_view:layout_constraintHorizontal_bias="1.0"
+                card_view:layout_constraintStart_toEndOf="@+id/phone_text_view"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/address_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="129sp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"

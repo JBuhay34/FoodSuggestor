@@ -6,9 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.justlive.justinbuhay.foodsuggestor.MainActivity;
 import com.justlive.justinbuhay.foodsuggestor.R;
 
 import java.util.HashMap;
@@ -16,12 +20,12 @@ import java.util.List;
 
 public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdapter.BusinessCardViewHolder> {
 
-    private Context context;
+    private Context mContext;
     private List<HashMap<String, String>> mBusinesses;
 
-    public BusinessCardsAdapter(Context context, List<HashMap<String, String>> mBussinesses){
-        this.context = context;
-        this.mBusinesses = mBussinesses;
+    public BusinessCardsAdapter(Context mContext, List<HashMap<String, String>> mBusinesses){
+        this.mBusinesses = mBusinesses;
+        this.mContext = mContext;
     }
 
 
@@ -48,6 +52,7 @@ public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdap
         float rating = Float.parseFloat(mBusinesses.get(position).get("rating"));
         String price = mBusinesses.get(position).get("price");
         String address = mBusinesses.get(position).get("address");
+        String image_url = mBusinesses.get(position).get("image_url");
 
 
         // Set item views based on your views and data model
@@ -56,6 +61,10 @@ public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdap
         holder.ratingBar.setRating(rating);
         holder.priceTextView.setText(price);
         holder.addressTextView.setText(address);
+        RequestOptions options = new RequestOptions();
+        options.centerCrop();
+
+        Glide.with(mContext).load(image_url).apply(options).into(holder.businessImageView);
 
 
     }
@@ -68,6 +77,7 @@ public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdap
     public static class BusinessCardViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nameTextView, phoneTextView, priceTextView, addressTextView;
+        public ImageView businessImageView;
         public RatingBar ratingBar;
 
         public BusinessCardViewHolder(View itemView) {
@@ -78,6 +88,7 @@ public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdap
             phoneTextView = (TextView) itemView.findViewById(R.id.phone_text_view);
             priceTextView = (TextView) itemView.findViewById(R.id.price_text_view);
             addressTextView = (TextView) itemView.findViewById(R.id.address_text_view);
+            businessImageView = itemView.findViewById(R.id.business_image_view);
         }
     }
 
