@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private Button searchButton;
     private RecyclerView businessCardsRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private BusinessCardsAdapter mBusinessCardsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         businessCardsRecyclerView.setLayoutManager(mLayoutManager);
+        businessCardsRecyclerView.setAdapter(mBusinessCardsAdapter);
+
 
 
         searchButton.setOnClickListener(this);
@@ -71,7 +74,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<HashMap<String,String>>> loader, List<HashMap<String,String>> data) {
-        businessCardsRecyclerView.setAdapter(new BusinessCardsAdapter(this, data));
+        mBusinessCardsAdapter = new BusinessCardsAdapter(this, data);
+        mBusinessCardsAdapter.notifyDataSetChanged();
+        businessCardsRecyclerView.setAdapter(mBusinessCardsAdapter);
 
 
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.justlive.justinbuhay.foodsuggestor.networking.FetchYelpAPIData;
 
@@ -44,6 +45,7 @@ public class YelpAsyncTaskLoader extends AsyncTaskLoader<List<HashMap<String,Str
     public List<HashMap<String, String>> loadInBackground() {
 
         String theJSON = getJSONString();
+        Log.e(this.getClass().getSimpleName(), theJSON);
 
         return parseJSON(theJSON);
 
@@ -87,8 +89,6 @@ public class YelpAsyncTaskLoader extends AsyncTaskLoader<List<HashMap<String,Str
                 int rating = current.getInt("rating");
                 String phone = current.getString("phone");
                 String price = current.getString("price");
-                float longitude = (float) current.getDouble("longitude");
-                float latitude = (float) current.getDouble("latitude");
 
                 JSONObject location = current.getJSONObject("location");
                 JSONArray displayAddressArray = location.getJSONArray("display_address");
