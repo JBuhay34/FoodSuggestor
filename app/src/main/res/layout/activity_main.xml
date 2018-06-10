@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/terms_edit_text"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="152dp"
@@ -23,6 +24,7 @@
 
     <EditText
         android:id="@+id/location_edit_text"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="152dp"
@@ -37,6 +39,7 @@
 
     <Button
         android:id="@+id/search_button"
+        android:background="@drawable/background_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

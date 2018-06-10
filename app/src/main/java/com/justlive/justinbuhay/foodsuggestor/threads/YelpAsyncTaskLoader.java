@@ -45,7 +45,6 @@ public class YelpAsyncTaskLoader extends AsyncTaskLoader<List<HashMap<String,Str
     public List<HashMap<String, String>> loadInBackground() {
 
         String theJSON = getJSONString();
-        Log.e(this.getClass().getSimpleName(), theJSON);
 
         return parseJSON(theJSON);
 
