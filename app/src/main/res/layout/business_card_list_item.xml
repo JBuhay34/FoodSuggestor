@@ -9,7 +9,7 @@
 
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        card_view:cardBackgroundColor="@color/colorPrimary"
+        card_view:cardBackgroundColor="@color/colorAccent"
         android:id="@+id/business_card_view"
         android:layout_width="350dp"
         android:layout_height="200dp"
