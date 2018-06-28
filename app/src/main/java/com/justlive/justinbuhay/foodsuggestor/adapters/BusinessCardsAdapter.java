@@ -1,6 +1,8 @@
 package com.justlive.justinbuhay.foodsuggestor.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,11 +25,14 @@ public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdap
     private Context mContext;
     private List<HashMap<String, String>> mBusinesses;
 
-    public BusinessCardsAdapter(Context mContext, List<HashMap<String, String>> mBusinesses){
+    public BusinessCardsAdapter(Context mContext, List<HashMap<String, String>> mBusinesses) {
         this.mBusinesses = mBusinesses;
         this.mContext = mContext;
     }
 
+    public void onClick(View view) {
+        ((MainActivity) mContext).onClickCard(view);
+    }
 
 
     @NonNull
@@ -54,6 +59,16 @@ public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdap
         String address = mBusinesses.get(position).get("address");
         String image_url = mBusinesses.get(position).get("image_url");
 
+        final String url = mBusinesses.get(position).get("url");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context c = v.getContext();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                c.startActivity(intent);
+            }
+        });
 
         // Set item views based on your views and data model
         holder.nameTextView.setText(name);
@@ -83,7 +98,7 @@ public class BusinessCardsAdapter extends RecyclerView.Adapter<BusinessCardsAdap
         public BusinessCardViewHolder(View itemView) {
             super(itemView);
 
-            nameTextView = (TextView)itemView.findViewById(R.id.business_name_text_view);
+            nameTextView = (TextView) itemView.findViewById(R.id.business_name_text_view);
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
             phoneTextView = (TextView) itemView.findViewById(R.id.phone_text_view);
             priceTextView = (TextView) itemView.findViewById(R.id.price_text_view);
