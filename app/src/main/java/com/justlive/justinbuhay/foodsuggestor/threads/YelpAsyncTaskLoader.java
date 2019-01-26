@@ -88,13 +88,13 @@ public class YelpAsyncTaskLoader extends AsyncTaskLoader<List<HashMap<String,Str
                 int rating = current.getInt("rating");
                 String phone = current.getString("phone");
                 String price = current.getString("price");
+                String url = current.getString("url");
 
                 JSONObject location = current.getJSONObject("location");
                 JSONArray displayAddressArray = location.getJSONArray("display_address");
                 String address = "";
                 for(int j = 0; j < displayAddressArray.length(); j++){
                     address += displayAddressArray.getString(j) + " ";
-
 
                 }
 
@@ -108,6 +108,8 @@ public class YelpAsyncTaskLoader extends AsyncTaskLoader<List<HashMap<String,Str
                 hashdata.put("phone", phone);
                 hashdata.put("price", price);
                 hashdata.put("address", address);
+                hashdata.put("url", url);
+                Log.e("YelpAsyncTask:", hashdata.get("url"));
 
                 // adding contact to contact list
                 data.add(hashdata);

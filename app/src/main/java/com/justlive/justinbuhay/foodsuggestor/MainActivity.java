@@ -103,4 +103,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             getSupportLoaderManager().restartLoader(3, null, this).forceLoad();
         }
     }
+
+    public void onClickCard(View view){
+    }
 }
